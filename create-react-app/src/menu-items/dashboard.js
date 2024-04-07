@@ -1,6 +1,7 @@
 // assets
 import { IconDashboard } from '@tabler/icons';
 
+
 // constant
 const icons = { IconDashboard };
 

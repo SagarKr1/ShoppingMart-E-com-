@@ -1,5 +1,7 @@
 // assets
 import { IconKey } from '@tabler/icons';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 // constant
 const icons = {
@@ -10,30 +12,32 @@ const icons = {
 
 const pages = {
   id: 'pages',
-  title: 'Pages',
-  caption: 'Pages Caption',
+  title: 'category',
+  caption: 'Product Category',
   type: 'group',
   children: [
     {
       id: 'authentication',
-      title: 'Authentication',
+      title: 'Product',
       type: 'collapse',
       icon: icons.IconKey,
 
       children: [
         {
-          id: 'login3',
-          title: 'Login',
+          id: 'Add',
+          title: 'Add',
           type: 'item',
-          url: '/pages/login/login3',
-          target: true
+          url: '/product/add',
+          icon: AddShoppingCartIcon,
+          breadcrumbs: false
         },
         {
-          id: 'register3',
-          title: 'Register',
+          id: 'View',
+          title: 'View',
           type: 'item',
-          url: '/pages/register/register3',
-          target: true
+          url: '/product/view',
+          icon: ShoppingBagIcon,
+          breadcrumbs: false
         }
       ]
     }
