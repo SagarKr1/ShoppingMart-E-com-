@@ -13,6 +13,8 @@ import { store } from 'store';
 import 'assets/scss/style.scss';
 import config from './config';
 
+import { ToastContainer} from 'react-toastify';
+
 // ==============================|| REACT DOM RENDER  ||============================== //
 
 const container = document.getElementById('root');
@@ -21,6 +23,7 @@ root.render(
   <Provider store={store}>
     <BrowserRouter basename={config.basename}>
       <App />
+      <ToastContainer />
     </BrowserRouter>
   </Provider>
 );

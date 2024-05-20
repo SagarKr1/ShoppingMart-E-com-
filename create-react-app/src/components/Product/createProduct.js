@@ -7,9 +7,14 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Paper from '@mui/material/Paper';
+import { useDispatch } from 'react-redux';
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const CreateProduct = () => {
+    const dispatch = useDispatch();
+    const [images, setImages] = React.useState([]);
     const [Data, setData] = React.useState({
         "name": "",
         "size": "",
@@ -17,9 +22,16 @@ const CreateProduct = () => {
         "category": "",
         "description": "",
         "price": "",
-        "stock": "",
-        "images": []
+        "stock": ""
     })
+
+    const handleFileChange = (event) => {
+        const files = event.target.files;
+
+        const imageFiles = Array.from(files).filter((file) => file.type.startsWith('image/'));
+
+        setImages(imageFiles);
+    };
 
     const handlerData = (e) => {
         console.log("Data");
@@ -33,6 +45,30 @@ const CreateProduct = () => {
     }
     const handlerProduct = () => {
         console.log("Data Submitted");
+        // console.log(Data)
+        if (Data.name != "" && Data.brand != "" && Data.category != "" && Data.description != "" && Data.price != "" && Data.size != "" && Data.stock != "" && images[0] != undefined) {
+            console.log(images[0])
+            const Product = {
+                "name": Data.name,
+                "size": Data.size,
+                "brand": Data.brand,
+                "category":Data.category,
+                "description": Data.description,
+                "price": Data.price,
+                "stock": Data.stock,
+                "image":URL.createObjectURL(images[0])
+            }
+            toast.success("Successful")
+            console.log(Product);
+            const data = dispatch({ type: "Add", Product });
+            console.log(data)
+        } else {
+            console.log('Empty Field')
+            toast.error("Empty Field")
+        }
+        // console.log(images[0])
+        // dispatch({ type: "Add", Data });
+        // console.log(URL.createObjectURL(images[0]))
     }
 
     const categoryList = [
@@ -45,13 +81,13 @@ const CreateProduct = () => {
     ]
 
     return (
-        <Paper sx={{padding:{xs:2,sm:5,md:8}}}>
+        <Paper sx={{ padding: { xs: 2, sm: 5, md: 8 } }}>
             <Box>
                 <Box sx={{ textAlign: "center", marginBottom: 4 }}>
                     Add Your Product Here
                 </Box>
 
-                <Box sx={{ display: {xs:"flex",md:"grid"}, flexDirection: "column", gap: 4 }}>
+                <Box sx={{ display: { xs: "flex", md: "grid" }, flexDirection: "column", gap: 4 }}>
                     <TextField name='name' value={Data.name} onChange={handlerData} id="name" label="Product Name" variant="outlined" />
                     <TextField name='size' value={Data.size} onChange={handlerData} id="size" label="Size" variant="outlined" />
                     <FormControl fullWidth>
@@ -78,8 +114,28 @@ const CreateProduct = () => {
                     <TextField type='number' name='stock' value={Data.stock} onChange={handlerData} id="stock" label="Stock" variant="outlined" />
                     <Box>
                         <Typography>Upload Images</Typography>
-                        <input type='file' multiple name='Upload image' id="fileInput" accept="image/*"/>
-                        
+                        <input
+                            type='file'
+                            name='Upload image'
+                            id="fileInput"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                        />
+                        <Box>
+                            {
+                                images.map((image, index) => (
+                                    <Box key={index}>
+                                        {console.log("images ", image)}
+                                        <img
+                                            key={index}
+                                            style={{ height: 200, marginTop: 10 }}
+                                            src={URL.createObjectURL(image)}
+                                            alt="Product"
+                                        />
+                                    </Box>
+                                ))
+                            }
+                        </Box>
                     </Box>
                 </Box>
 
