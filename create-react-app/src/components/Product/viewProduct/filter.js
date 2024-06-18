@@ -9,10 +9,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { useSelector,useDispatch } from 'react-redux';
+import { TextField } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 export default function SwipeableTemporaryDrawer(props) {
+    const [search,setSearch] = React.useState('');
     const dispatch = useDispatch();
     const CategoryList = useSelector((state) => {
         // console.log(state);
@@ -21,10 +23,14 @@ export default function SwipeableTemporaryDrawer(props) {
     const [state, setState] = React.useState({
         right: false
     });
+    const searchHandler = (e)=>{
+        setSearch(e.target.value);
+        console.log(search)
+    }
 
-    const handleFilter =(category)=>{
-        console.log("Click ",category);
-        dispatch({type:'Get',category:category})
+    const handleFilter = (category) => {
+        console.log("Click ", category);
+        dispatch({ type: 'Get', category: category })
         props.Reload()
     }
 
@@ -54,7 +60,7 @@ export default function SwipeableTemporaryDrawer(props) {
                             <ListItemIcon>
                                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                             </ListItemIcon>
-                            <ListItemText primary={text.category} onClick={()=>handleFilter(text.category)} />
+                            <ListItemText primary={text.category} onClick={() => handleFilter(text.category)} />
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -63,7 +69,11 @@ export default function SwipeableTemporaryDrawer(props) {
     );
 
     return (
-        <div>
+        <Box sx={{display:"flex",flexDirection:"row" , marginBottom: 5 }}>
+            <Box sx={{flex:1}}>
+            <TextField name='search' value={search} onChange={searchHandler} sx={{width:{xs:"48vw",md:"34vw"}}} id="outlined-basic" label="Search" variant="outlined"></TextField>
+            </Box>
+            <Box>
                 <React.Fragment key={'right'}>
                     <Button onClick={toggleDrawer('right', true)}>Filter</Button>
                     <SwipeableDrawer
@@ -75,6 +85,7 @@ export default function SwipeableTemporaryDrawer(props) {
                         {list('right')}
                     </SwipeableDrawer>
                 </React.Fragment>
-        </div>
+            </Box>
+        </Box>
     );
 }

@@ -34,7 +34,7 @@ export default function ProductCard(props) {
                     // height:400,
                     width: 200,
                     margin: "auto",
-                    border: "2px solid red",
+                    // border: "2px solid red",
                     backgroundColor: (theme) =>
                         theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                 }}

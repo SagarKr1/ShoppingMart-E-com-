@@ -123,7 +123,7 @@ const initialProductState = {
 }
 
 
-const ProductReducer = (state = initialProductState, action) => {
+const ProductReducer =(state = initialProductState, action) => {
     switch (action.type) {
         case "Add": {
             console.log("State", state);
@@ -165,8 +165,9 @@ const ProductReducer = (state = initialProductState, action) => {
             })
             return state;
 
-        default:
+        default:{
             return state;
+        }
     }
 }
 
