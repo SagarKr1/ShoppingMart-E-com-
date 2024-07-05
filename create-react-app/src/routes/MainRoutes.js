@@ -11,6 +11,9 @@ const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')))
 import CreateProduct from 'components/Product/createProduct';
 import AllProduct from 'components/Product/allProduct';
 import Product from 'components/Product/Product';
+import Order from 'components/utils/order';
+import Category from 'components/utils/category';
+import User from 'components/utils/users';
 // import { element } from 'prop-types';
 // const addProduct = Loadable(lazy(()=>import('components/Product/createProduct')));
 
@@ -47,6 +50,23 @@ const MainRoutes = {
         {
           path:':id',
           element:<Product/>
+        }
+      ]
+    },
+    {
+      path: '/utils',
+      children: [
+        {
+          path: 'category',
+          element: <Category />
+        },
+        {
+          path:'orders',
+          element:<Order/>
+        },
+        {
+          path:'user',
+          element:<User/>
         }
       ]
     }

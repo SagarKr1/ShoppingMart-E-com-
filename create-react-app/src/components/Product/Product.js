@@ -39,10 +39,11 @@ export default function Product() {
     })
 
     const [loader, setLoader] = React.useState(false);
-
+    const [changeImage, setImageChange] = React.useState(false);
     const [images, setImages] = React.useState([]);
     //images
     const handleFileChange = (event) => {
+        setImageChange(true);
         const files = event.target.files;
 
         const imageFiles = Array.from(files).filter((file) => file.type.startsWith('image/'));
@@ -101,13 +102,14 @@ export default function Product() {
     }, [])
 
     const editHandler = (edit) => {
-        switch(edit){
+        switch (edit) {
             case 'edit':
                 setEdit(true);
                 break;
 
             case 'cancel':
                 setEdit(false);
+                setImageChange(false);
                 setData(productData);
                 break;
 
@@ -128,10 +130,10 @@ export default function Product() {
                     <Button >Back</Button>
                     {
                         !Edit ?
-                            <Button onClick={()=>editHandler('edit')} >Edit</Button> :
+                            <Button onClick={() => editHandler('edit')} >Edit</Button> :
                             <Box>
-                                {!loader?<Button onClick={()=>editHandler('save')} variant="outlined">Save</Button>:<Button sx={{ marginTop: 10 }} variant="outlined"><Loader /></Button>}
-                                <Button onClick={()=>editHandler('cancel')} variant="outlined">Cancel</Button>
+                                {!loader ? <Button onClick={() => editHandler('save')} variant="outlined">Save</Button> : <Button sx={{ marginTop: 10 }} variant="outlined"><Loader /></Button>}
+                                <Button onClick={() => editHandler('cancel')} variant="outlined">Cancel</Button>
                             </Box>
                     }
 
@@ -213,27 +215,45 @@ export default function Product() {
                         }}
                         type='number' name='stock' value={Data.stock} onChange={handlerData} id="stock" label="Stock" variant="outlined" />
                     <Box>
-                        <Typography>Upload Images</Typography>
-                        <input
-                            type='file'
-                            name='Upload image'
-                            id="fileInput"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                        />
+                        {
+                            Edit ?
+                                <>
+                                    <Typography>Upload Image</Typography>
+                                    <input
+                                        type='file'
+                                        name='Upload image'
+                                        id="fileInput"
+                                        accept="image/*"
+                                        onChange={handleFileChange}
+                                        readOnly
+                                    />
+                                </>
+                                :
+                                <>
+                                    <Typography>Uploaded Image</Typography>
+                                </>
+                        }
                         <Box>
                             {
-                                images.map((image, index) => (
-                                    <Box key={index}>
-                                        {console.log("images ", image)}
-                                        <img
-                                            key={index}
-                                            style={{ height: 200, marginTop: 10 }}
-                                            src={URL.createObjectURL(image)}
-                                            alt="Product"
-                                        />
-                                    </Box>
-                                ))
+                                changeImage ?
+                                    images.map((image, index) => (
+                                        <Box key={index}>
+                                            {console.log("images ", image)}
+                                            <img
+                                                key={index}
+                                                style={{ height: 200, marginTop: 10 }}
+                                                src={URL.createObjectURL(image)}
+                                                alt="Product"
+                                            />
+                                        </Box>
+                                    ))
+                                    :
+                                    <img
+                                        key={Data.id}
+                                        style={{ height: 200, marginTop: 10 }}
+                                        src={Data.image}
+                                        alt="Product"
+                                    />
                             }
                         </Box>
                     </Box>
