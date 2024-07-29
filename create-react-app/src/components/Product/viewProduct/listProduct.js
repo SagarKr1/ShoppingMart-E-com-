@@ -8,8 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+// import axios from 'axios';
+// import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -85,19 +85,24 @@ export default function ListProduct(props) {
                                         aria-expanded={open ? 'true' : undefined}
                                         onClick={handleClick}
                                     >
+                                        {/* {console.log(product.id)} */}
                                         <MoreVertIcon />
                                     </IconButton>
                                     <Menu
                                         id="basic-menu"
                                         anchorEl={anchorEl}
                                         open={open}
+                                        // print={console.log(product.id)}
                                         onClose={handleClose}
                                         MenuListProps={{
                                             'aria-labelledby': 'basic-button',
                                         }}
                                     >
                                         <MenuItem
-                                            onClick={() => handleDeleteProduct(product.id)}
+                                            onClick={() => {
+                                                console.log(product.id);
+                                                handleDeleteProduct(product.id)
+                                            }}
                                         >Delete</MenuItem>
                                         <MenuItem
                                             onClick={() => productHandler(product.id)}

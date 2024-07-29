@@ -19,7 +19,7 @@ export default function ProductCard(props) {
     };
     const handleDeleteProduct =(id)=>{
         console.log("product Id ",id);
-        dispatch({ type: "Delete", id })
+        // dispatch({ type: "Delete", id })
         setAnchorEl(null);
         props.Reload()
     }
